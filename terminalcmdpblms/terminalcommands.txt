@@ -1,0 +1,172 @@
+*Check folder present, if not then create folder*
+
+1. Script for counting occurances of systemd in /var/log directory
+
+ls /var/log | grep -c systemd
+
+
+OUTPUT
+0
+__________________________________________________________________________________________________
+
+2. Script for print specific columns in of running process
+
+ps -elf | awk '{print $4, $5, $15, $12, $8}' | head -10 | column -t
+
+OUTPUT
+	PID  PPID  CMD             	STIME 	 NI
+	1    0     /sbin/init      	08:59 	 0
+	2    0     [kthreadd]      	08:59 	 0
+	4    2     [kworker/0:0H]  	08:59 	-20
+	6    2     [mm_percpu_wq]  	08:59 	-20
+	7    2     [ksoftirqd/0]   	08:59 	 0
+	8    2     [rcu_sched]     	08:59 	 0
+	9    2     [rcu_bh]        	08:59  	 0
+	10   2     [migration/0]   	08:59  	 -
+	11   2     [watchdog/0]    	08:59  	 -
+___________________________________________________________________________________________________
+
+3. Script for Employee name and Total Salary whose BasePay is > 10000
+
+cat data.csv  | awk '$4 > 10000 {print $2, $7}'| column -t
+
+OUTPUT
+EmployeeName  TotalPay
+NATHANIEL     567595
+GARY          538909
+ALBERT        335279
+CHRISTOPHER   332343
+PATRICK       326373
+DAVID         316285
+ALSON         315981
+DAVID         307899
+JOANNE        302377
+PATRICIA      297608
+EDWARD        294580
+____________________________________________________________________________________________________
+
+4. Select Employee where job title is CAPTAIN,calculate sum of its total pay print it
+
+cat data.csv | grep CAPTAIN | awk '{sum+=$7} END {print sum}'
+
+OUTPUT
+1171796
+_____________________________________________________________________________________________________
+
+5. Print Jobtitle and and Overtime pay where overtime pay is in between 7000 & 10000
+
+cat data.csv  | awk '{if ($5 > 7000 && $5 < 10000) print $3, $5}'
+
+OR
+
+cat data.csv  | awk '{if ($5 > 7000 && $5 < 10000) print $3, $5}' | column -t
+
+OUTPUT
+DEPUTYCHIEF 9737
+ASSTDEPUTY 8601
+_______________________________________________________________________________________________________
+
+6. sort access data
+
+command: cat access.log |awk '{print $11}'| sort | uniq -c | sort -rn | head -4
+
+OUTPUT 
+ 1475 "https://fundoopush-dev.bridgelabz.com/login"
+   1141 "https://fundoopush-dev.bridgelabz.com/dashboard/article"
+    377 "-"
+    176 "https://fundoopush-dev.bridgelabz.com/add-post"
+________________________________________________________________________________________________________
+
+7. print the lost of last 4 frequently access url for perticular order
+
+command: cat access.log |awk '{print $11}'| sort | uniq -c | sort -rn | head -4
+
+OUTPUT
+1475 "https://fundoopush-dev.bridgelabz.com/login"
+   1141 "https://fundoopush-dev.bridgelabz.com/dashboard/article"
+    377 "-"
+    176 "https://fundoopush-dev.bridgelabz.com/add-post"
+_________________________________________________________________________________________________________
+
+8. Do Sum of All BasePay find its average
+	print average
+
+cat data.csv  | awk '{sum+=$4} END {print sum/NR}'
+
+OUTPUT
+157972
+__________________________________________________________________________________________________________
+
+9. Find Difference Between Directories
+
+mkdir original
+cd original/
+touch original-file.sh
+
+cd..
+
+mkdir updated
+cd updated/
+touch updated-file.sh
+cd ..
+
+diff original/ updated/
+
+OUTPUT
+Only in original/: original-file.sh
+Only in updated/: updated-file.sh
+____________________________________________________________________________________________________________
+
+10. Get last 4 Frequently accessed URLs and its count
+
+cd /var/log
+
+OR
+
+cd TerminalCommands/linux-content/
+
+cat access.log |awk '{print $11}'| sort | uniq -c | sort -rn | head -4
+
+OUTPUT
+   1475 "https://fundoopush-dev.bridgelabz.com/login"
+   1141 "https://fundoopush-dev.bridgelabz.com/dashboard/article"
+    377 "-"
+    176 "https://fundoopush-dev.bridgelabz.com/add-post"
+_____________________________________________________________________________________________________________
+
+11. Get last 4 Frequently accessed URLs at particular hrs and its count
+
+cd /var/log
+
+OR
+
+cd TerminalCommands/linux-content/
+
+cat access.log |awk '{print $11}'| sort | uniq -c | sort -rn | head -4
+
+OUTPUT
+   1475 "https://fundoopush-dev.bridgelabz.com/login"
+   1141 "https://fundoopush-dev.bridgelabz.com/dashboard/article"
+    377 "-"
+    176 "https://fundoopush-dev.bridgelabz.com/add-post"
+_____________________________________________________________________________________________________________
+
+12. Get the web response code countin unique sorted order
+
+cat access.log |awk '{print $9}' |sort |uniq -c |sort -rn | head -2
+
+OUTPUT
+   3176 200
+     26 304
+_____________________________________________________________________________________________________________
+
+13. Print list of last 10 unique sorted client ip from access.log
+
+cat access.log |awk '{print $21 , $22}' |sort |uniq -c |sort -rn | head -4
+
+OUTPUT
+   2348 "114.79.180.62"
+    474 77.0.3865.92
+    168 77.0.3865.90
+    148 77.0.3865.90 
+
